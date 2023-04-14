@@ -54,6 +54,7 @@ const msg = document.querySelector('.msg');
 const userList = document.querySelector('#users');
 
 myForm.addEventListener('submit', onSubmit);
+let userDetails = JSON.parse(localStorage.getItem('userDetails')) || [];
 function onSubmit(event) {
     event.preventDefault();
     let nameInputValue = nameInput.value;
@@ -87,9 +88,13 @@ function onSubmit(event) {
             name : nameInputValue,
             email : emailInputValue
         }
-        localStorage.setItem('userDetails', JSON.stringify(obj));
+        //add the new user details to array
+        userDetails.push(obj);
+        //Store the updated array back to the local storage.
+        localStorage.setItem('userDetails', JSON.stringify(userDetails));
         nameInputValue = '';
         emailInputValue = '';
+        
     }
 }
 //adding items to localstorage
