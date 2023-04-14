@@ -79,16 +79,19 @@ function onSubmit(event) {
         userList.appendChild(li); // added values ko ul me add krne ke liye.
 
         //clear fields
-        localStorage.setItem('name', nameInputValue);
-        localStorage.setItem('email', emailInputValue);
-        console.log(localStorage.getItem('name'));
-        console.log(localStorage.getItem('email'));
+        // localStorage.setItem('name', nameInputValue);
+        // localStorage.setItem('email', emailInputValue);
+        // console.log(localStorage.getItem('name'));
+        // console.log(localStorage.getItem('email'));
+        const obj = {
+            name : nameInputValue,
+            email : emailInputValue
+        }
+        localStorage.setItem('userDetails', JSON.stringify(obj));
         nameInputValue = '';
         emailInputValue = '';
     }
 }
-
-
 //adding items to localstorage
 
 // localStorage.setItem('name', 'Rakesh Dhawan'); // working
