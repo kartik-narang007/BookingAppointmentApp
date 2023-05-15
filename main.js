@@ -91,84 +91,81 @@ const emailInput = document.getElementById('email');
 const userList = document.getElementById('users');
 const msg = document.querySelector('.msg');
 
-// form submit event
+//form submit event
+
 myForm.addEventListener('submit', onSubmit);
 
-// function
+//creating submit function
+
 async function onSubmit(e) {
   e.preventDefault();
 
-  if (nameInput.value === '' || emailInput.value === '') {
+  if(nameInput.value === '' || emailInput.value ===''){
     msg.classList.add('error');
-    msg.innerHTML = 'Please fill out all fields';
+    msg.innerHTML = "Please Enter All Fields";
     setTimeout(() => {
       msg.remove();
     }, 3000);
-  } else {
+  }else{
     const obj = {
       name: nameInput.value,
       email: emailInput.value
     };
-
-    try {
-      const res = await axios.post(
-        'https://crudcrud.com/api/800393409a7a468e8f5212db230295f9/appointmentdata',
-        obj
-      );
+    try{
+      const res = await axios.post('https://crudcrud.com/api/5522beb636444003b50df3f1e30d495b/appointmentdata', obj);
+      
 
       const user = res.data;
 
       const li = document.createElement('li');
       li.appendChild(document.createTextNode(`${user.name}: ${user.email}`));
-      createButtons(li, user);
+      createButtons(li,user);
       userList.appendChild(li);
-
       nameInput.value = '';
       emailInput.value = '';
-    } catch (err) {
-      console.error(err);
+    }catch (err){
+      console.log(err);
     }
   }
 }
 
-// Retrieve list items from the API
+//get userdetails and append it to li
+
 async function getUserDetails() {
-  try {
-    const res = await axios.get(
-      'https://crudcrud.com/api/800393409a7a468e8f5212db230295f9/appointmentdata'
-    );
+  try{
+    const res = await axios.get('https://crudcrud.com/api/5522beb636444003b50df3f1e30d495b/appointmentdata');
     const userDetails = res.data;
 
-    userDetails.forEach(function (user) {
+
+    userDetails.forEach(function(user){
       const li = document.createElement('li');
       li.appendChild(document.createTextNode(`${user.name}: ${user.email}`));
       createButtons(li, user);
       userList.appendChild(li);
-    });
-  } catch (err) {
-    console.error(err);
+    });   
+  }catch(err){
+    console.log(err);
   }
 }
-
 getUserDetails();
 
-// function to create delete and edit buttons
+
+//create buttons
+
+
 function createButtons(li, user) {
+  //creating deletebutton
   const deleteBtn = document.createElement('button');
   deleteBtn.innerHTML = 'Delete';
-  deleteBtn.addEventListener('click', async () => {
+  deleteBtn.addEventListener('click', async()=>{
     li.remove();
-
-    try {
-      await axios.delete(
-        `https://crudcrud.com/api/800393409a7a468e8f5212db230295f9/appointmentdata/${user._id}`
-      );
-    } catch (err) {
-      console.error(err);
+    try{
+      await axios.delete(`https://crudcrud.com/api/5522beb636444003b50df3f1e30d495b/appointmentdata/${user._id}`)
+    }catch(err){
+      console.log(err);
     }
   });
   li.appendChild(deleteBtn);
-
   const editBtn = document.createElement('button');
   editBtn.innerHTML = 'Edit';
   editBtn.addEventListener('click', () => {
@@ -178,4 +175,5 @@ function createButtons(li, user) {
     li.remove(); // Remove list item
   });
   li.appendChild(editBtn);
+
 }
